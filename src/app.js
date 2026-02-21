@@ -1,20 +1,32 @@
+/* eslint-disable no-console */
 'use strict';
 
-const readline = require('node:readline');
+const rl = require('./modules/readline').rl;
 const { getBullsAndCows } = require('./modules/getBullsAndCows');
 const { generateRandomNumber } = require('./modules/generateRandomNumber');
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+const { checkIsValidUserInput } = require('./modules/checkIsValidUserInput');
 
 const numberToGuess = generateRandomNumber();
 
-rl.question('Enter your guess: ', (answer) => {
-  const result = getBullsAndCows(answer, numberToGuess);
+function prompt() {
+  rl.question('Enter your guess: ', (answer) => {
+    if (!checkIsValidUserInput(answer)) {
+      console.log('Enter correct guess');
 
-  // eslint-disable-next-line no-console
-  console.log(`Bulls: ${result.bulls}, Cows: ${result.cows}`);
-  rl.close();
-});
+      return prompt();
+    }
+
+    const result = getBullsAndCows(answer, numberToGuess);
+
+    if (result.bulls === 4) {
+      console.log('Congratulations! You guessed the number!');
+
+      return rl.close();
+    }
+
+    console.log(`Bulls: ${result.bulls}, Cows: ${result.cows}`);
+    prompt();
+  });
+}
+
+prompt();

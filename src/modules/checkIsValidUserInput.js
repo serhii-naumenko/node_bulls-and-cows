@@ -1,7 +1,5 @@
 'use strict';
 
-const { hasDuplicateDigits } = require('./generateRandomNumber');
-
 /**
  * Checks that the user input is valid.
  * Valid user input is a 4-digit number that does not start with 0
@@ -14,8 +12,7 @@ function checkIsValidUserInput(userInput) {
   if (
     typeof userInput !== 'string' ||
     userInput.length !== 4 ||
-    userInput[0] === '0' ||
-    hasDuplicateDigits(userInput)
+    userInput[0] === '0'
   ) {
     return false;
   }

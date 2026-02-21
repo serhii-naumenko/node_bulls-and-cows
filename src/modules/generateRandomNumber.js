@@ -9,28 +9,19 @@
 function generateRandomNumber() {
   const result = Math.floor(Math.random() * 9000) + 1000;
 
-  if (hasDuplicateDigits(result)) {
-    return generateRandomNumber();
-  }
-
-  return result;
-}
-
-function hasDuplicateDigits(number) {
   const digits = new Set();
 
-  for (const digit of number.toString()) {
+  for (const digit of result.toString()) {
     if (digits.has(digit)) {
-      return true;
+      return generateRandomNumber();
     }
 
     digits.add(digit);
   }
 
-  return false;
+  return result;
 }
 
 module.exports = {
   generateRandomNumber,
-  hasDuplicateDigits,
 };
